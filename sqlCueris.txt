@@ -1,0 +1,135 @@
+ventas por dia:
+
+/*
+SELECT 
+    TO_CHAR(TRUNC(fecha), 'YYYY-MM-DD') AS FECHA,
+    SUM(cantidad) AS cantidad
+FROM 
+    movimientos_amazon
+WHERE 
+    cantidad IS NOT NULL and region = 'EU'
+GROUP BY 
+    TO_CHAR(TRUNC(fecha), 'YYYY-MM-DD')
+ORDER BY 
+    TO_CHAR(TRUNC(fecha), 'YYYY-MM-DD');
+*/
+
+Actividades:
+
+/*
+SELECT 
+    CASE 
+        WHEN tipo_movimiento = 'Ordine' THEN 'Pedido'
+        WHEN tipo_movimiento = 'Costo di stoccaggio Logistica di Amazon' THEN 'Tarifas de inventario de Logística de Amazon'
+        WHEN tipo_movimiento = 'Saldo negativo' THEN 'Saldo descubierto'
+        WHEN tipo_movimiento = 'Trasferimento' THEN 'Transferir'
+        WHEN tipo_movimiento = 'Commissione di servizio' THEN 'Tarifa de prestación de servicio'
+        WHEN tipo_movimiento = 'Rimborso' THEN 'Reembolso'
+        WHEN tipo_movimiento = 'Commande' THEN 'Pedido'
+        WHEN tipo_movimiento = 'Frais de service' THEN 'Tarifa de prestación de servicio'
+        WHEN tipo_movimiento = 'Transfert' THEN 'Transferir'
+        WHEN tipo_movimiento = 'Frais de stock Expédié par Amazon' THEN 'Tarifas de inventario de Logística de Amazon'
+        WHEN tipo_movimiento = 'Ajustement' THEN 'Ajuste'
+        WHEN tipo_movimiento = 'Servicegebühr' THEN 'Tarifa de prestación de servicio'
+        WHEN tipo_movimiento = 'Übertrag' THEN 'Transferir'
+        WHEN tipo_movimiento = 'Versand durch Amazon Lagergebühr' THEN 'Tarifas de inventario de Logística de Amazon'
+        WHEN tipo_movimiento = 'Bestellung' THEN 'Pedido'
+        WHEN tipo_movimiento = 'Verbindlichkeit' THEN 'Saldo descubierto'
+        WHEN tipo_movimiento = 'Erstattung' THEN 'Reembolso' 
+        WHEN tipo_movimiento = 'Anpassung' THEN 'Ajuste'
+        WHEN tipo_movimiento = 'Gebührenanpassun' THEN 'Ajuste de tarifas'
+        WHEN tipo_movimiento = 'Servicekosten' THEN 'Tarifa de prestación de servicio'
+        WHEN tipo_movimiento = 'Bestelling' THEN 'Pedido'
+        ELSE tipo_movimiento
+    END AS renamed_column,
+    COUNT(*) AS count_of_renamed_column
+FROM 
+    movimientos_amazon
+    WHERE
+        region = 'EU'
+GROUP BY
+    CASE 
+        WHEN tipo_movimiento = 'Ordine' THEN 'Pedido'
+        WHEN tipo_movimiento = 'Costo di stoccaggio Logistica di Amazon' THEN 'Tarifas de inventario de Logística de Amazon'
+        WHEN tipo_movimiento = 'Saldo negativo' THEN 'Saldo descubierto'
+        WHEN tipo_movimiento = 'Trasferimento' THEN 'Transferir'
+        WHEN tipo_movimiento = 'Commissione di servizio' THEN 'Tarifa de prestación de servicio'
+        WHEN tipo_movimiento = 'Rimborso' THEN 'Reembolso'
+        WHEN tipo_movimiento = 'Commande' THEN 'Pedido'
+        WHEN tipo_movimiento = 'Frais de service' THEN 'Tarifa de prestación de servicio'
+        WHEN tipo_movimiento = 'Transfert' THEN 'Transferir'
+        WHEN tipo_movimiento = 'Frais de stock Expédié par Amazon' THEN 'Tarifas de inventario de Logística de Amazon'
+        WHEN tipo_movimiento = 'Ajustement' THEN 'Ajuste'
+        WHEN tipo_movimiento = 'Servicegebühr' THEN 'Tarifa de prestación de servicio'
+        WHEN tipo_movimiento = 'Übertrag' THEN 'Transferir'
+        WHEN tipo_movimiento = 'Versand durch Amazon Lagergebühr' THEN 'Tarifas de inventario de Logística de Amazon'
+        WHEN tipo_movimiento = 'Bestellung' THEN 'Pedido'
+        WHEN tipo_movimiento = 'Verbindlichkeit' THEN 'Saldo descubierto'
+        WHEN tipo_movimiento = 'Erstattung' THEN 'Reembolso' 
+        WHEN tipo_movimiento = 'Anpassung' THEN 'Ajuste'
+        WHEN tipo_movimiento = 'Gebührenanpassun' THEN 'Ajuste de tarifas'
+        WHEN tipo_movimiento = 'Servicekosten' THEN 'Tarifa de prestación de servicio'
+        WHEN tipo_movimiento = 'Bestelling' THEN 'Pedido'
+        ELSE tipo_movimiento
+    END;
+*/
+
+v2
+
+/*
+SELECT 
+    tipo_movimiento,
+    COUNT(*) AS count_of_product_tipo
+FROM 
+    movimientos_amazon
+WHEN
+    region = 'US'
+GROUP BY 
+    tipo_movimiento
+*/
+
+Ingreso mensual
+
+/*
+SELECT 
+    TO_CHAR(TRUNC(fecha), 'YYYY-MM-DD') AS FECHA,
+    SUM(venta_despues_impuestos) AS venta_despues_impuestos
+FROM 
+    movimientos_amazon
+WHERE 
+    venta_despues_impuestos IS NOT NULL and region = 'EU'
+GROUP BY 
+    TO_CHAR(TRUNC(fecha), 'YYYY-MM-DD')
+ORDER BY 
+    TO_CHAR(TRUNC(fecha), 'YYYY-MM-DD');
+*/
+
+SKU
+
+/*
+SELECT 
+    sku,
+    SUM(cantidad) AS cantidad
+FROM 
+    movimientos_amazon
+WHERE 
+    cantidad IS NOT NULL and region = 'EU'
+GROUP BY
+    sku
+ORDER BY
+    cantidad DESC;
+*/
+
+Localizacion
+
+/*
+SELECT 
+    order_state ,
+    SUM(cantidad) AS cantidad
+FROM 
+    movimientos_amazon
+WHERE 
+    cantidad IS NOT NULL and region = 'EU'
+GROUP BY
+    order_state
+*/
